@@ -1,0 +1,155 @@
+#include<iostream>
+using namespace std;
+
+class Node
+{
+private:
+    /* data */
+public:
+    int data;
+    Node*next;
+
+Node(int d)
+{
+    data=d;
+    next=NULL;
+}
+};
+//Linked List class(object oriented programming)
+/*class linkedlist{
+    Node*head;
+    Node*tail;
+    public:
+    linkedlist(){ //Constructor
+
+    }
+    void insert(int d){
+
+    }
+}
+*/
+
+//Functions (Procedural Programming)
+void build(){
+
+}
+//head is passed by reference as we need to update head after insertion .
+void insertAtHead(Node*&head,int d){
+    if (head==NULL){
+        head=new Node(d);
+        return;
+    }
+    Node *n= new Node(d);
+    n->next=head;
+    head=n;
+}
+
+int length(Node*head){
+    int cnt=0;
+    while(head!=NULL){
+        head=head->next;
+        cnt++;
+    }
+    return cnt;
+}
+
+void insertAtTail(Node*&head, int data){
+    if (head==NULL){
+        head=new Node (data);
+        return;
+    }
+    Node*tail=head;
+    while(tail->next!=NULL){
+        tail=tail->next;
+    }
+    tail->next=new Node(data);
+
+}
+
+void insertAtMiddle(Node*&head, int data, int p){
+    if(head==NULL || p==0){
+        insertAtHead(head, data);
+    }
+    else if (p>=length(head)){
+        insertAtTail(head, data);
+    }
+    else{
+        int jump=1;
+        Node*temp=head;
+        while(jump<=p-1){
+            temp=temp->next;
+            jump++;
+        }
+        Node*n=new Node(data);
+        n->next=temp->next;
+        temp->next=n;
+
+        }
+
+    }
+
+
+//if we pass head by reference then linked list is printed only once. as after printing, the head becomes NULL .
+void print(Node*head){
+    while(head!=NULL){
+        cout<<head->data<<"->";
+        head=head->next;
+    }
+    cout<<endl;
+}
+
+void deleteHead(Node*&head){
+    if (head==NULL){ //when list is empty
+        return;
+    }
+    Node*temp=head->next; //storing the location of next element of list
+    delete head; //remove head from heap
+    head=temp; //shifting head to next element
+}
+
+void deleteAtMiddle(Node*head, int pos){
+    int jump=1;
+    Node*prev=head;
+    while(jump<=pos-1){
+        prev=prev->next;
+        jump++;
+    }
+    Node*temp=prev->next;
+    prev->next=temp->next;
+    delete temp;
+
+    }
+
+void deleteTail(Node*&head){
+    int end=length(head);
+    Node*tail=head;
+    int jump=1;
+     while(jump!=end-1){
+            tail=tail->next;
+            jump++;
+        }
+        Node*del=tail->next;
+        tail->next=NULL;
+        delete del;
+}
+
+
+
+int main(){
+    Node*head=NULL;
+    insertAtHead(head,5);
+    insertAtHead(head,2);
+    insertAtHead(head,1);
+    insertAtHead(head,0);
+    print(head);
+    insertAtMiddle(head, 4,3);
+    insertAtTail(head,7);
+    print(head);
+    deleteHead(head);
+    print(head);
+    deleteTail(head);
+    print(head);
+    deleteAtMiddle(head,2);
+    print(head);
+
+}
